@@ -1,27 +1,26 @@
 // https://github.com/tc39/proposal-async-iterator-helpers
 
-const AsyncIterator = Object.getPrototypeOf(
-  (async function*() {})()[Symbol.asyncIterator]()
-)
+const AsyncIterator = Object.getPrototypeOf((async function* () {})()[Symbol.asyncIterator]())
+const AsyncIteratorPrototype = Object.getPrototypeOf(AsyncIterator)
 
-AsyncIterator.from = function(iterable) {
-  return {
-    [Symbol.asyncIterator]: async function*() {
-      for await (const value of iterable) {
-        yield value
-      }
-    }
-  }
-}
+// AsyncIterator.from = function (iterable) {
+//   return {
+//     [Symbol.asyncIterator]: async function* () {
+//       for await (const value of iterable) {
+//         yield value
+//       }
+//     },
+//   }
+// }
 
-AsyncIterator.prototype.map = async function*(callback) {
+AsyncIteratorPrototype.map = async function* (callback) {
   let index = 0
   for await (const value of this) {
     yield callback(value, index++)
   }
 }
 
-AsyncIterator.prototype.filter = async function*(callback) {
+AsyncIteratorPrototype.filter = async function* (callback) {
   let index = 0
   for await (const value of this) {
     if (callback(value, index++)) {
@@ -30,7 +29,7 @@ AsyncIterator.prototype.filter = async function*(callback) {
   }
 }
 
-AsyncIterator.prototype.take = async function*(count) {
+AsyncIteratorPrototype.take = async function* (count) {
   for (let i = 0; i < count; i++) {
     const r = await this.next()
     if (r.value !== undefined) {
@@ -42,7 +41,7 @@ AsyncIterator.prototype.take = async function*(count) {
   }
 }
 
-AsyncIterator.prototype.drop = async function*(count) {
+AsyncIteratorPrototype.drop = async function* (count) {
   let index = 0
   for await (const value of this) {
     if (index++ >= count) {
@@ -51,7 +50,7 @@ AsyncIterator.prototype.drop = async function*(count) {
   }
 }
 
-AsyncIterator.prototype.flatMap = async function*(callback) {
+AsyncIteratorPrototype.flatMap = async function* (callback) {
   let index = 0
   for await (const value of this) {
     const mapped = callback(value, index++)
@@ -65,7 +64,7 @@ AsyncIterator.prototype.flatMap = async function*(callback) {
   }
 }
 
-AsyncIterator.prototype.reduce = async function(reducer, initialValue) {
+AsyncIteratorPrototype.reduce = async function (reducer, initialValue) {
   let accumulator = initialValue
   let first = true
 
@@ -79,15 +78,13 @@ AsyncIterator.prototype.reduce = async function(reducer, initialValue) {
   }
 
   if (accumulator === undefined) {
-    throw new TypeError(
-      "Cannot reduce an empty async iterator without an initial value."
-    )
+    throw new TypeError('Cannot reduce an empty async iterator without an initial value.')
   }
 
   return accumulator
 }
 
-AsyncIterator.prototype.toArray = async function() {
+AsyncIteratorPrototype.toArray = async function () {
   const result = []
   for await (const value of this) {
     result.push(value)
@@ -95,7 +92,7 @@ AsyncIterator.prototype.toArray = async function() {
   return result
 }
 
-AsyncIterator.prototype.some = async function(callback) {
+AsyncIteratorPrototype.some = async function (callback) {
   let index = 0
   for await (const value of this) {
     if (await callback(value, index++)) {
@@ -105,7 +102,7 @@ AsyncIterator.prototype.some = async function(callback) {
   return false
 }
 
-AsyncIterator.prototype.every = async function(callback) {
+AsyncIteratorPrototype.every = async function (callback) {
   let index = 0
   for await (const value of this) {
     if (!(await callback(value, index++))) {
@@ -115,7 +112,7 @@ AsyncIterator.prototype.every = async function(callback) {
   return true
 }
 
-AsyncIterator.prototype.find = async function(callback) {
+AsyncIteratorPrototype.find = async function (callback) {
   let index = 0
   for await (const value of this) {
     if (await callback(value, index++)) {
