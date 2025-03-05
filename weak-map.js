@@ -1,7 +1,9 @@
+const StdWeakMap = WeakMap
+
 class ClearableWeakMap {
   #wm
   constructor(init) {
-    this.#wm = new WeakMap(init)
+    this.#wm = new StdWeakMap(init)
   }
   clear() {
     this.#wm = new WeakMap()
