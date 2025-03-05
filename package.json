@@ -1,0 +1,12 @@
+{
+  "name": "unspec-js",
+  "private": true,
+  "type": "module",
+  "dependencies": {},
+  "devDependencies": {},
+  "exports": {
+    ".": {
+      "default": "./index.js"
+    }
+  }
+}
