@@ -1,6 +1,6 @@
-import './polyfill'
-import './weak-map'
-import './iterator-async'
-import './iterator'
+import './polyfill.js'
+import './weak-map.js'
+import './iterator-async.js'
+import './iterator.js'
 
 // ---
