@@ -29,5 +29,5 @@ Array.prototype.at ??= function(index) {
   if (index < 0) {
     index += this.length
   }
-  return this[index]
+  return this[Math.floor(index)]
 }
