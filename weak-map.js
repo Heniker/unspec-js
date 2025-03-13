@@ -6,7 +6,7 @@ class ClearableWeakMap {
     this.#wm = new StdWeakMap(init)
   }
   clear() {
-    this.#wm = new WeakMap()
+    this.#wm = new StdWeakMap()
     return this
   }
   delete(k) {
