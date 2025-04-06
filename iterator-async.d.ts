@@ -57,11 +57,11 @@ declare global {
      * @param callbackfn A function that accepts up to three arguments. The reduce method calls the callbackfn function one time for each element in the iterator.
      * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of a value from the iterator.
      */
-    reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number) => T): T
+    reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number) => T): Promise<T>
     reduce(
       callbackfn: (previousValue: T, currentValue: T, currentIndex: number) => T,
       initialValue: T
-    ): T
+    ): Promise<T>
 
     /**
      * Calls the specified callback function for all the elements in this iterator. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
@@ -71,18 +71,18 @@ declare global {
     reduce<U>(
       callbackfn: (previousValue: U, currentValue: T, currentIndex: number) => U,
       initialValue: U
-    ): U
+    ): Promise<U>
 
     /**
      * Creates a new array from the values yielded by this iterator.
      */
-    toArray(): T[]
+    toArray(): Promise<T[]>
 
     /**
      * Performs the specified action for each element in the iterator.
      * @param callbackfn  A function that accepts up to two arguments. forEach calls the callbackfn function one time for each element in the iterator.
      */
-    forEach(callbackfn: (value: T, index: number) => void): void
+    forEach(callbackfn: (value: T, index: number) => void): Promise<void>
 
     /**
      * Determines whether the specified callback function returns true for any element of this iterator.
@@ -90,7 +90,7 @@ declare global {
      * the predicate function for each element in this iterator until the predicate returns a value
      * true, or until the end of the iterator.
      */
-    some(predicate: (value: T, index: number) => unknown): boolean
+    some(predicate: (value: T, index: number) => unknown): Promise<boolean>
 
     /**
      * Determines whether all the members of this iterator satisfy the specified test.
@@ -98,7 +98,7 @@ declare global {
      * the predicate function for each element in this iterator until the predicate returns
      * false, or until the end of this iterator.
      */
-    every(predicate: (value: T, index: number) => unknown): boolean
+    every(predicate: (value: T, index: number) => unknown): Promise<boolean>
 
     /**
      * Returns the value of the first element in this iterator where predicate is true, and undefined
@@ -107,8 +107,8 @@ declare global {
      * order, until it finds one where predicate returns true. If such an element is found, find
      * immediately returns that element value. Otherwise, find returns undefined.
      */
-    find<S extends T>(predicate: (value: T, index: number) => value is S): S | undefined
-    find(predicate: (value: T, index: number) => unknown): T | undefined
+    find<S extends T>(predicate: (value: T, index: number) => value is S): Promise<S | undefined>
+    find(predicate: (value: T, index: number) => unknown): Promise<T | undefined>
 
     readonly [Symbol.toStringTag]: string
   }

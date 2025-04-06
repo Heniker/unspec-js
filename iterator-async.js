@@ -121,3 +121,10 @@ AsyncIteratorPrototype.find = async function (callback) {
   }
   return undefined
 }
+
+AsyncIteratorPrototype.forEach = async function(callback) {
+  let index = 0
+  for await (const value of this) {
+    await callback(value, index++)
+  }
+}
